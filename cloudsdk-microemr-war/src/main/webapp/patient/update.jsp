@@ -19,9 +19,10 @@
      		'application/json; charset=utf-8', 'read');
        });
        function updatePatient(){
-    	   if(!validatePatient()){
+    	  /*  if(!validatePatient()){
                return;
-             } 
+             }  */
+             patient={};
        	 var serviceURL=basepath_patient+'update';
             $('#updateForm :input[type="text"]').each(function(){
     			   storePatient($(this).attr('name'), $(this).val());  
@@ -48,7 +49,7 @@
    <tr><td><label>Middle Name</label></td><td> <input type="text" name="middleName"></td></tr>
     <tr><td><label class="required">Last Name</label></td><td> <input type="text" name="lastName"></td></tr>
      <tr><td><label class="required">Date Of Birth</label></td><td><input type="text" name="dob" id="dob" readonly></td></tr>
-      <tr><td colspan="2" align="center"><input type="button" name="submit" id="submit" onclick="updatePatient()" value="update"></td></tr>
+      <tr><td colspan="2" align="center"><input type="button" name="submit" id="submit" onclick="constraintValidate('update')" value="update"></td></tr>
  </table> 
  </fieldset>  
   </form>

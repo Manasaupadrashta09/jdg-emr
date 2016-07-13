@@ -57,24 +57,21 @@ function storePatient(pattr,pvalue){
    
    function successFun(result,operation){
 	   if(operation==='create'){
-		   $('#msgDiv').html('<span>Created Successfully</span>');
+		   $('#msgDiv').html('<span>Created Successfully</span>').show();
 		   $('#createForm :input[type="text"]').each(function(){
 			   $(this).val("");
 		   });
 		   patient={};
-		  // fetchList();
 	   }else if(operation==='update'){
-		   $('#msgDiv').html('<span>Updated Successfull</span>');
+		   $('#msgDiv').html('<span>Updated Successfully</span>').show();
 		   patient={};
-		   fetchList();
 	   }else if(operation==='delete'){
-		   $('#msgDiv').html('<span>Deleted Successfull</span>');
+		   $('#msgDiv').html('<span>Deleted Successfully</span>').show();
 		   patient={};
 		   fetchList();
 	   }else if(operation==='read'){
 		  $('#updateForm :input[type="text"]').each(function(){
 			  var $input=$(this)
-			   //storePatient($(this).attr('name'), $(this).val());
 			  $input.val(result[$input.attr('name')]);
 	   });
 		   
@@ -88,17 +85,19 @@ function storePatient(pattr,pvalue){
    }
    
    function failedFun(jqXHR,textStatus,errorThrown,operation ){
-	   
-	   if(operation='create'){
-		   $('#msgDiv').html('<span>Creation Failed</span>');
+	   if(operation==='create'){
+		   showMessage("Creation Failed")
 		   /*$('#patientDiv form[input:type="text"]').each(function(){
 			   var $input=$(this);
 			   $input='';
 		   });*/
 		 //  fetchList();
-	   }else if(operation='update'){
-		   $('#msgDiv').html('<span>Updation Failed</span>');
+	   }else if(operation==='update'){
+		   showMessage("Updation Failed");
 		 //  fetchList();
+	   }else if(operation==='read'){
+		   showMessage("Patient Not Found");
+		   $('#updateForm').html('');
 	   }
    }
   
@@ -145,4 +144,54 @@ function storePatient(pattr,pvalue){
 	        $('input[name="dob"]').removeClass('glowing-border');
 	        
 	        return true;
-	     }  
+	     } 
+	     
+     function constraintValidate(operation){
+    	    $('input[name="firstName"]').removeClass('glowing-border');
+	        $('input[name="lastName"]').removeClass('glowing-border');
+	        $('input[name="dob"]').removeClass('glowing-border');
+	        $('input[name="identifier"]').removeClass('glowing-border');
+	       var isValid=false;
+	       if(operation==='create'){
+	    	   $('#createForm :input[type="text"]').each(function() {
+					storePatient($(this).attr('name'), $(this).val());
+				});
+	       }else if(operation==='update'){
+	    	   $('#updateForm :input[type="text"]').each(function(){
+    			   storePatient($(this).attr('name'), $(this).val());  
+    	      });
+	       }
+       	 $.ajax({
+     		   url:basepath_patient+'validate/'+operation+'',
+     		   data: userData=JSON.stringify(patient),
+     		   dataType:'json',
+     		   async:false,
+     		   type:'POST',
+     		   method:'POST',
+     		   contentType:'application/json; charset=utf-8',
+     		   success:function(result){
+     				   var errorMsg='';
+     				   for(var key in result){
+     					   if(result.hasOwnProperty(key)){
+     						  errorMsg+='<span style="color:red">'+result[key]+'</span><br/>'
+     						  $('input[name="'+key+'"]').addClass('glowing-border');
+     					   }
+     			       }
+     				    if(errorMsg.length>0){
+     				    	$('#msgDiv').html(errorMsg);
+     				    	return false;
+     				    }else{
+     				    	hideMessage();
+     				    	if(operation=='create'){
+     				    		createPatient();
+     				    	}else if(operation==='update'){
+     				    		updatePatient();
+     				    	}
+     				    }
+     			  },
+     			 error:function(jqXHR,textStatus,errorThrown){
+     				 showMessage("Patient Service not available:"+textStatus);
+     			 } 
+       	      
+       	 });
+     }

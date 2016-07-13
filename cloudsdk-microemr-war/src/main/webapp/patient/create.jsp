@@ -21,17 +21,19 @@
 			});
 	  });
 
-	    
+
+
+	   
     function createPatient(){
-       if(!validatePatient()){
+        //uncomment the below for client side validations.
+      /*  if(!validatePatient()){
                return;
-         } 
+         }   */
+       patient={};
 		var serviceURL = basepath_patient + 'create';
 			$('#createForm :input[type="text"]').each(function() {
 				storePatient($(this).attr('name'), $(this).val());
 			});
-
-		
 		callAjax(serviceURL, patient, 'json', false, 'POST',
 					'application/json; charset=utf-8', 'create');
 
@@ -55,7 +57,7 @@
     <tr><td><label class="required">Last Name</label></td><td> <input type="text" name="lastName"></td></tr>
      <tr><td><label class="required">Date Of Birth</label></td><td><input type="text" name="dob" id="dob" readonly></td></tr>
      <!--  <tr><td colspan="2" align="center"><input class="button-ui ui-corner-all ui-state-default ui-widget" type="button" name="submit" id="submit" onclick="createPatient()" value="Create"></td></tr> -->
-      <tr><td colspan="2" align="center"><input type="button" name="submit" id="submit" onclick="createPatient()" value="Create"></td></tr>
+      <tr><td colspan="2" align="center"><input type="button" name="submit" id="submit" onclick="constraintValidate('create')" value="Create"></td></tr>
  </table> 
  </fieldset>  
   </form>
