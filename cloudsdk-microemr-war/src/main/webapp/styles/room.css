@@ -1,0 +1,26 @@
+@CHARSET "ISO-8859-1";
+
+    form label{ 
+      font-family: "Trebuchet MS",sans-serif;
+      font-weight:normal;
+      font-size:75%;
+    }
+    form{
+        width:80%;
+    }
+    form table{
+      margin:auto auto;
+      width:350px;
+    }
+   form table td{
+      width:20%;
+    }
+    
+   #submit{
+     font-size:75%;
+   }
+   
+   #ui-datepicker-div { font-size:8px;}
+   
+    
+    input:read-only { background: #eee; }

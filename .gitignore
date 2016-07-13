@@ -1,0 +1,76 @@
+#Java Excludes
+*.class
+*.log
+
+#Mobile tools for java(J2ME)
+.mtj.tmp/
+
+#packaging files
+*.jar
+*.war
+*.ear
+
+#virtual machine crach logs
+hs_err_pid*
+
+#Maven Excludes
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properites
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+
+#Eclipse Excludes
+.classpath
+.factorypath
+.tern-project
+.gradle/
+.project
+.settings/
+
+#Gradle Excludes
+.gradle
+build/
+
+#Ignore Gradle GUI Config
+gradle-app.settings
+
+#Avoid Ignoring Gradle Wraper jar file
+!gradle-wrapper.jar
+
+# All bak files
+*.bak
+
+#OS Generated Files
+.DS_Store
+.DS_Store?
+._*
+Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+#Packages
+*.7z
+*.dmz
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+
+#compiled sources
+*.com
+*.dll
+*.exe
+*.o
+*.so
+
+#pmd files
+.pmd
+.pmdruleset.xml
