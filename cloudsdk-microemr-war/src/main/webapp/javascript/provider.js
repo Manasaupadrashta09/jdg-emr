@@ -33,17 +33,6 @@ function storeProvider(pattr,pvalue){
 		   }
 		})
 		
-		/*$('a.update').click(function(){
-		    	var $atag=$(this);
-		    	var identifier=$(this).closest('tr').find('td > input').val();
-		    	$('#msgDiv').html('');
-		    	$('#customDiv').load('update.jsp');
-		    	provider={"identifier":identifier};
-		    	var serviceURL=basepath_provider+'read'
-		    	callAjax(serviceURL, provider, 'json', false, 'POST',
-		    			'application/json; charset=utf-8', 'read');
-		    	//bindEvents();
-		    })*/
 		    $('a.delete').click(function(){
 		    	var $atag=$(this);
 		    	var identifier=$(this).closest('tr').find('td > input').val();
@@ -57,24 +46,21 @@ function storeProvider(pattr,pvalue){
    
    function successFun(result,operation){
 	   if(operation==='create'){
-		   $('#msgDiv').html('<span>Created Successfully</span>');
+		   $('#msgDiv').html('<span>Created Successfully</span>').show();
 		   $('#createForm :input[type="text"]').each(function(){
 			   $(this).val("");
 		   });
 		   provider={};
-		  // fetchList();
 	   }else if(operation==='update'){
-		   $('#msgDiv').html('<span>Updated Successfull</span>');
+		   $('#msgDiv').html('<span>Updated Successfull</span>').show();
 		   provider={};
-		   fetchList();
 	   }else if(operation==='delete'){
-		   $('#msgDiv').html('<span>Deleted Successfull</span>');
+		   $('#msgDiv').html('<span>Deleted Successfull</span>').show();
 		   provider={};
 		   fetchList();
 	   }else if(operation==='read'){
 		  $('#updateForm :input[type="text"]').each(function(){
 			  var $input=$(this)
-			   //storePatient($(this).attr('name'), $(this).val());
 			  $input.val(result[$input.attr('name')]);
 	   });
 		   
@@ -88,16 +74,13 @@ function storeProvider(pattr,pvalue){
    }
    
    function failedFun(jqXHR,textStatus,errorThrown,operation ){
-	   if(operation='create'){
-		   $('#msgDiv').html('<span>Creation Failed</span>');
-		   /*$('#patientDiv form[input:type="text"]').each(function(){
-			   var $input=$(this);
-			   $input='';
-		   });*/
-		 //  fetchList();
-	   }else if(operation='update'){
-		   $('#msgDiv').html('<span>Updation Failed</span>');
-		 //  fetchList();
+	   if(operation==='create'){
+		   showMessage("Creation Failed")
+	   }else if(operation==='update'){
+		   showMessage("Updation Failed");
+	   }else if(operation==='read'){
+		   showMessage("Provider Not Found");
+		   $('#updateForm').html('');
 	   }
    }
   
@@ -145,4 +128,52 @@ function storeProvider(pattr,pvalue){
 	          
 	        return true;
 	     }  
-
+	     function constraintValidate(operation){
+	    	    $('input[name="providerName"]').removeClass('glowing-border');
+		        $('input[name="contact"]').removeClass('glowing-border');
+		        $('input[name="identifier"]').removeClass('glowing-border');
+		       var isValid=false;
+		       provider={};
+		       if(operation==='create'){
+		    	   $('#createForm :input[type="text"]').each(function() {
+						storeProvider($(this).attr('name'), $(this).val());
+					});
+		       }else if(operation==='update'){
+		    	   $('#updateForm :input[type="text"]').each(function(){
+		    		   storeProvider($(this).attr('name'), $(this).val());  
+	    	      });
+		       }
+	       	 $.ajax({
+	     		   url:basepath_provider+'validate',
+	     		   data: userData=JSON.stringify(provider),
+	     		   dataType:'json',
+	     		   async:false,
+	     		   type:'POST',
+	     		   method:'POST',
+	     		   contentType:'application/json; charset=utf-8',
+	     		   success:function(result){
+	     				   var errorMsg='';
+	     				   for(var key in result){
+	     					   if(result.hasOwnProperty(key)){
+	     						  errorMsg+='<span style="color:red">'+result[key]+'</span><br/>'
+	     						  $('input[name="'+key+'"]').addClass('glowing-border');
+	     					   }
+	     			       }
+	     				    if(errorMsg.length>0){
+	     				    	$('#msgDiv').html(errorMsg);
+	     				    	return false;
+	     				    }else{
+	     				    	hideMessage();
+	     				    	if(operation=='create'){
+	     				    		createProvider();
+	     				    	}else if(operation==='update'){
+	     				    		updateProvider();
+	     				    	}
+	     				    }
+	     			  },
+	     			 error:function(jqXHR,textStatus,errorThrown){
+	     				 showMessage("Provider Service not available:"+textStatus);
+	     			 } 
+	       	      
+	       	 });
+	     }

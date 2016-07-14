@@ -18,11 +18,13 @@
 			});
 	  });
 
-	    
+
+
+	
     function createProvider(){
-        if(!validateProvider()){
+       /*  if(!validateProvider()){
            return false;
-            }
+            } */
         
         var serviceURL=basepath_provider+'create';
         $('#createForm :input[type="text"]').each(function(){
@@ -50,7 +52,7 @@
   <table style="witdh:300px;">
   <tr><td><label class="required">Provider Name</label></td><td><input type="text" name="providerName" id="providerName"></td></tr>
    <tr><td><label class="required">Contact</label></td><td><input type="text" name="contact"></td></tr>
-      <tr><td colspan="2" align="center"><input type="button" name="submit" id="submit" onclick="createProvider()" value="Create"></td></tr>
+      <tr><td colspan="2" align="center"><input type="button" name="submit" id="submit" onclick="constraintValidate('create')" value="Create"></td></tr>
  </table> 
  </fieldset>  
   </form>

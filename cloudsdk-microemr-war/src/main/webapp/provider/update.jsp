@@ -20,9 +20,9 @@
        });
        function updateProvider(){
 
-    	   if(!validateProvider()){
+    	  /*  if(!validateProvider()){
                return false;
-                }
+                } */
        	 var serviceURL=basepath_provider+'update';
             $('#updateForm :input[type="text"]').each(function(){
     			   storeProvider($(this).attr('name'), $(this).val());  
@@ -47,7 +47,7 @@
    <tr><td><label>ID</label></td><td><input type="text" name="identifier" readonly></td></tr>
   <tr><td><label class="required">Provider Name</label></td><td><input type="text" name="providerName" id="providerName"></td></tr>
    <tr><td><label class="required">Contact</label></td><td> <input type="text" name="contact"></td></tr>
-      <tr><td colspan="2" align="center"><input type="button" name="submit" id="submit" onclick="updateProvider()" value="update"></td></tr>
+      <tr><td colspan="2" align="center"><input type="button" name="submit" id="submit" onclick="constraintValidate('update')" value="update"></td></tr>
  </table> 
  </fieldset>  
   </form>
