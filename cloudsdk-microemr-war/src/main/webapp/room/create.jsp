@@ -15,10 +15,11 @@
 
 	    
     function createRoom(){
-        if(!validateRoom()){
+        /* if(!validateRoom()){
              return;
-            }
+            } */
         var serviceURL=basepath_room+'create';
+            room={};
         $('#createForm :input[type="text"],#createForm select').each(function(){
 		       if($(this).attr('name')!='providerName'){
 			   storeRoom($(this).attr('name'), $(this).val());  
@@ -52,7 +53,7 @@
                <option value="true">Yes</option>
            </select>
            </td></tr>
-      <tr><td colspan="2" align="center"><input type="button" name="submit" id="submit" onclick="createRoom()" value="Create"></td></tr>
+      <tr><td colspan="2" align="center"><input type="button" name="submit" id="submit" onclick="constraintValidate('create')" value="Create"></td></tr>
  </table> 
  </fieldset>  
   </form>

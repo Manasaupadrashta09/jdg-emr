@@ -57,18 +57,16 @@ function storeRoom(pattr,pvalue){
    
    function successFun(result,operation){
 	   if(operation==='create'){
-		   $('#msgDiv').html('<span>Created Successfully</span>');
+		   $('#msgDiv').html('<span>Created Successfully</span>').show();
 		   $('#createForm :input[type="text"]').each(function(){
 			   $(this).val("");
 		   });
 		   room={};
-		  // fetchList();
 	   }else if(operation==='update'){
-		   $('#msgDiv').html('<span>Updated Successfull</span>');
+		   $('#msgDiv').html('<span>Updated Successfull</span>').show();
 		   room={};
-		   fetchList();
 	   }else if(operation==='delete'){
-		   $('#msgDiv').html('<span>Deleted Successfull</span>');
+		   $('#msgDiv').html('<span>Deleted Successfull</span>').show();
 		   room={};
 		   fetchList();
 	   }else if(operation==='read'){
@@ -116,16 +114,13 @@ function storeRoom(pattr,pvalue){
    }
    
    function failedFun(jqXHR,textStatus,errorThrown,operation ){
-	   if(operation='create'){
-		   $('#msgDiv').html('<span>Creation Failed</span>');
-		   /*$('#patientDiv form[input:type="text"]').each(function(){
-			   var $input=$(this);
-			   $input='';
-		   });*/
-		 //  fetchList();
-	   }else if(operation='update'){
-		   $('#msgDiv').html('<span>Updation Failed</span>');
-		 //  fetchList();
+	   if(operation==='create'){
+		   showMessage("Creation Failed")
+	   }else if(operation==='update'){
+		   showMessage("Updation Failed");
+	   }else if(operation==='read'){
+		   showMessage("Room Not Found");
+		   $('#updateForm').html('');
 	   }
    }
   
@@ -169,3 +164,58 @@ function storeRoom(pattr,pvalue){
 	          
 	        return true;
 	     }  
+	     
+	     function constraintValidate(operation){
+	    	 $('input[name="providerId"]').removeClass('glowing-border');
+	            $('input[name="providerName"]').removeClass('glowing-border');
+	            $('input[name="roomName"]').removeClass('glowing-border');
+		       var isValid=false;
+		       room={};
+		       if(operation==='create'){
+		    	   $('#createForm :input[type="text"],#createForm select').each(function(){
+				       if($(this).attr('name')!='providerName'){
+					   storeRoom($(this).attr('name'), $(this).val());  
+					       }
+			      });
+		       }else if(operation==='update'){
+		    	   $('#updateForm :input[type="text"],#updateForm select,#identifier').each(function(){
+		    		   //if($(this).attr('name')!='providerName'){
+		      			   storeRoom($(this).attr('name'), $(this).val());  
+		      			   //    }
+		    	   });
+		    	   delete room['providerName'];
+		       }
+	       	 $.ajax({
+	     		   url:basepath_room+'validate/'+operation+'',
+	     		   data: userData=JSON.stringify(room),
+	     		   dataType:'json',
+	     		   async:false,
+	     		   type:'POST',    
+	     		   method:'POST',
+	     		   contentType:'application/json; charset=utf-8',
+	     		   success:function(result){
+	     				   var errorMsg='';
+	     				   for(var key in result){
+	     					   if(result.hasOwnProperty(key)){
+	     						  errorMsg+='<span style="color:red">'+result[key]+'</span><br/>'
+	     						  $('input[name="'+key+'"]').addClass('glowing-border');
+	     					   }
+	     			       }
+	     				    if(errorMsg.length>0){
+	     				    	$('#msgDiv').html(errorMsg);
+	     				    	return false;
+	     				    }else{
+	     				    	hideMessage();
+	     				    	if(operation=='create'){
+	     				    		createRoom();
+	     				    	}else if(operation==='update'){
+	     				    		updateRoom();
+	     				    	}
+	     				    }
+	     			  },
+	     			 error:function(jqXHR,textStatus,errorThrown){
+	     				 showMessage("Room Service not available:"+textStatus);
+	     			 } 
+	       	      
+	       	 });
+	     }
