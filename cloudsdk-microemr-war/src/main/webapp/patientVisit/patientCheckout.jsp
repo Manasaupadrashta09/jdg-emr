@@ -27,6 +27,7 @@
   <div class="content">
 <!-- Common content end -->
 <div id="dispalyList">
+<div id="msgDiv"></div>
   <fieldset>
   <legend>Checked In Patients</legend>
      <table border="1px" id="displayTable" class="tablesorter">

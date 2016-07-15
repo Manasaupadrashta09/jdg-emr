@@ -17,10 +17,11 @@
 
 	    
     function createAppointment(){
-        if(!validateVisit()){
+       /*  if(!validateVisit()){
             return;  
-        }
+        } */
         var serviceURL=basepath_visit+'create';
+        apppointment={};
         $('#createForm input').each(function(){
 			   storeAppointment($(this).attr('name'), $(this).val());  
 	   });
@@ -61,7 +62,7 @@
       </td>
   </tr>
    <tr><td><label class="required">Date of Visit</label></td><td> <input type="text" name="dateOfVisit" id="dateOfVisit"></td></tr>
-      <tr><td colspan="2" align="center"><input type="button" name="submit" id="submit" onclick="createAppointment()" value="Schedule"></td></tr>
+      <tr><td colspan="2" align="center"><input type="button" name="submit" id="submit" onclick="constraintValidate('create')" value="Schedule"></td></tr>
  </table> 
  </fieldset>  
   </form>

@@ -67,18 +67,16 @@ function storeAppointment(pattr,pvalue){
    
    function successFun(result,operation){
 	   if(operation==='create'){
-		   $('#msgDiv').html('<span>Scheduled Successfully</span>');
+		   $('#msgDiv').html('<span>Scheduled Successfully</span>').show();
 		   $('#createForm :input[type="text"],#createForm :input[type="hidden"]').each(function(){
 			   $(this).val("");
 		   });
 		   appointment={};
-		  // fetchList();
 	   }else if(operation==='update'){
-		   $('#msgDiv').html('<span>Updated Successfull</span>');
+		   $('#msgDiv').html('<span>Updated Successfull</span>').show();
 		   appointment={};
-		   fetchList();
 	   }else if(operation==='delete'){
-		   $('#msgDiv').html('<span>Deleted Successfull</span>');
+		   $('#msgDiv').html('<span>Deleted Successfull</span>').show();
 		   appointment={};
 		   fetchList();
 	   }else if(operation==='read'){
@@ -106,7 +104,7 @@ function storeAppointment(pattr,pvalue){
 			   } 
 		   }
 	   }else if(operation=='patientCheckin'){
-		   $('#msgDiv').html('<span>Patient Checkin Successful</span>');
+		   $('#msgDiv').html('<span>Patient Checkin Successful</span>').show();
 	   }else if(operation==='checkedInPatients'){
 		   $('#displayTable tbody tr').remove();
 		   if(result!=null && result.length>0){
@@ -121,7 +119,7 @@ function storeAppointment(pattr,pvalue){
 			   $('#patientName').val(patientName);
 		   }
 	   }else if(operation==='updateRecord'){
-		   $('#msgDiv').html('<span>Recorded Successfully</span>');
+		   $('#msgDiv').html('<span>Recorded Successfully</span>').show();
 		   
 	   }else if(operation==='patientsForCheckout'){
 		   $('#displayTable tbody tr').remove();
@@ -139,16 +137,13 @@ function storeAppointment(pattr,pvalue){
    }
    
    function failedFun(jqXHR,textStatus,errorThrown,operation ){
-	   if(operation='create'){
-		   $('#msgDiv').html('<span>Creation Failed</span>');
-		   /*$('#patientDiv form[input:type="text"]').each(function(){
-			   var $input=$(this);
-			   $input='';
-		   });*/
-		 //  fetchList();
-	   }else if(operation='update'){
-		   $('#msgDiv').html('<span>Updation Failed</span>');
-		 //  fetchList();
+	   if(operation==='create'){
+		   showMessage("Creation Failed")
+	   }else if(operation==='update'){
+		   showMessage("Updation Failed");
+	   }else if(operation==='read'){
+		   showMessage("Appointment Not Found");
+		   $('#updateForm').html('');
 	   }
    }
   
@@ -294,3 +289,66 @@ function storeAppointment(pattr,pvalue){
             $('input[name="dateOfVisit"]').removeClass('glowing-border');
 	        return true;
 	     }  
+	     
+	     function constraintValidate(operation){
+	    	 $('input[name="patientName"]').removeClass('glowing-border');
+	            $('input[name="providerName"]').removeClass('glowing-border');
+	            $('input[name="dateOfVisit"]').removeClass('glowing-border');
+		       var isValid=false;
+		       appointment={};
+		       if(operation==='create'){
+			    $('#createForm input').each(function(){
+						   storeAppointment($(this).attr('name'), $(this).val());  
+				   });
+			         delete appointment['patientName'];
+			         delete appointment['providerName'];
+			         delete appointment['roomName']
+			         delete appointment['submit'];
+		       }else if(operation==='update'){
+			    	   $('#updateForm input').each(function(){
+			   			   storeAppointment($(this).attr('name'), $(this).val());  
+			   	        });
+			            delete appointment['patientName'];
+			            delete appointment['providerName'];
+			            delete appointment['submit'];
+		       }
+	       	 $.ajax({
+	     		   url:basepath_visit+'validate/'+operation+'',
+	     		   data: userData=JSON.stringify(appointment),
+	     		   dataType:'json',
+	     		   async:false,
+	     		   type:'POST',    
+	     		   method:'POST',
+	     		   contentType:'application/json; charset=utf-8',
+	     		   success:function(result){
+	     				   var errorMsg='';
+	     				   for(var key in result){
+	     					   if(result.hasOwnProperty(key)){
+	     						  errorMsg+='<span style="color:red">'+result[key]+'</span><br/>'
+	     						  if(key.toString()==='patientId'){
+	     							 $('input[name="patientName"]').addClass('glowing-border');
+	     						  }else if(key.toString()==='providerId'){
+	     							 $('input[name="providerName"]').addClass('glowing-border');
+	     						  }else{
+	     							  $('input[name="'+key+'"]').addClass('glowing-border');
+	     						  }
+	     					   }
+	     			       }
+	     				    if(errorMsg.length>0){
+	     				    	$('#msgDiv').html(errorMsg);
+	     				    	return false;
+	     				    }else{
+	     				    	hideMessage();
+	     				    	if(operation=='create'){
+	     				    		createAppointment();
+	     				    	}else if(operation==='update'){
+	     				    		updateAppointment();
+	     				    	}
+	     				    }
+	     			  },
+	     			 error:function(jqXHR,textStatus,errorThrown){
+	     				 showMessage("Appointment Service not available");
+	     			 } 
+	       	      
+	       	 });
+	     }

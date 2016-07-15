@@ -19,9 +19,9 @@
      		'application/json; charset=utf-8', 'read');
        });
        function updateAppointment(){
-    	   if(!validateVisit()){
+    	  /*  if(!validateVisit()){
                return;  
-           }
+           } */
     	   var serviceURL=basepath_visit+'update';
            $('#updateForm input').each(function(){
    			   storeAppointment($(this).attr('name'), $(this).val());  
@@ -48,6 +48,7 @@
   <table style="witdh:300px;">
   <tr><td><label class="required">Patient</label></td>
       <td>
+      <input type="hidden" name="identifier" id="identifier" value="<%=request.getParameter("identifier")%>">
        <input type="hidden" name="patientId" id="patientId" style="width=0%;">
        <input type="text" name="patientName" id="patientName" readonly="readonly">
        <img id="searchPatient" src="../images/search_icon.png" align="bottom"/>
@@ -61,7 +62,7 @@
       </td>
   </tr>
    <tr><td><label class="required">Date of Visit</label></td><td> <input type="text" name="dateOfVisit" id="dateOfVisit"></td></tr>
-      <tr><td colspan="2" align="center"><input type="button" name="submit" id="submit" onclick="updateAppointment()" value="upadte"></td></tr>
+      <tr><td colspan="2" align="center"><input type="button" name="submit" id="submit" onclick="constraintValidate('update')" value="upadte"></td></tr>
  </table> 
  </fieldset>  
   </form>

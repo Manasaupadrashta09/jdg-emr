@@ -11,7 +11,6 @@
 %>
 	 <script type="text/javascript">
 	 $(function() {
-		
 		$("#assign").button();
 		 var appointmentId=<%=request.getParameter("identifier")%>
 			var reqData={};
@@ -31,24 +30,61 @@
                      addCheckInRow(result);
                      prepareRooms(result.providerId);
 		 		   }
-	              })
-
-	       $("#assign").click(function(){
-	    	   appointment={};
+	              });
+	 });
+	              
+	      function checkInPatient(){
+		   		appointment={};
                 $('#checkInFoam input').each(function(){
      			   storeAppointment($(this).attr('name'), $(this).val());  
      	       });
-
+                appointment['roomId']=document.getElementById("roomId").value;
                 delete appointment['assign'];
                 delete appointment['undefined'];
+
+                var isValid=false;
+               //validate checking start
+                 $.ajax({
+	     		   url:basepath_visit+'validate/patientCheckin',
+	     		   data: userData=JSON.stringify(appointment),
+	     		   dataType:'json',
+	     		   async:false,
+	     		   type:'POST',    
+	     		   method:'POST',
+	     		   contentType:'application/json; charset=utf-8',
+	     		   success:function(result){
+	     				   var errorMsg='';
+	     				   for(var key in result){
+	     					   if(result.hasOwnProperty(key)){
+	     						  errorMsg+='<span style="color:red">'+result[key]+'</span><br/>'
+	     						  $('input[name="'+key+'"]').addClass('glowing-border');
+	     					   }
+	     			       }
+	     				    if(errorMsg.length>0){
+	     				    	$('#msgDiv').html(errorMsg);
+	     				    	isValid=false;
+	     				    }else{
+		     				    isValid=true;
+	     				    	hideMessage();
+	     				    }
+	     			  },
+	     			 error:function(jqXHR,textStatus,errorThrown){
+	     				 showMessage("Appointment Service not available:"+textStatus);
+	     			 } 
+	       	      
+	       	 });
+             //validate checkin end
+	         if(!isValid){//if validations fails returing function
+	                return;
+	             }
                  var serviceURL=basepath_visit+'patientCheckin';
                 callAjax(serviceURL,appointment, 'json', false,
               		  'POST', 'application/json; charset=utf-8','patientCheckin');
          		   var roomId=document.getElementById('roomId').value;
 			      updateRoom(roomId);      
-			    }); 
-	 });  
+		   	 }
 
+		   	 
     function updateRoom(roomId){
     	url_path=basepath_room+'update/patientCheckin/'+roomId+'';
 		$.ajax({
@@ -61,9 +97,9 @@
 	 		   contentType:'application/json; charset=utf-8',
 	 		   success:function(result){
                  // location.href='./patientVisitService.jsp';
+		            $('fieldset').remove(); 
 	 		   }
 		   });
-		$('fieldset').remove(); 
         }
 	 
 	 function prepareRooms(providerId){
@@ -82,7 +118,6 @@
 		 }); 
 	 }
      function addSelectBox(result){
-
          var selectBox='<select id="roomId"><option value="">--select--</option>';
          for(var i=0;i<result.length;i++){
 			   selectBox=selectBox+'<option value='+result[i].identifier+'>'+result[i].roomName+'</option>';
@@ -104,7 +139,7 @@
        .append('<td>'+providerName+'</td>')
        .append('<td>'+json.dateOfVisit+'</td>')
        .append('<td align="center"></td>')
-       .append('</tr>')
+       .append('</tr>');
        
 	 }
 	 </script>
@@ -122,7 +157,7 @@
   <jsp:include page="patientVisit_header_nav.jsp"/>
   <div class="content">
 <!-- Common content end -->
-  <div id="msgDiv"></div>
+<div id="msgDiv"></div>
   <fieldset>
   <legend>Assign Room</legend>
     <form id="checkInFoam" style="width:100%;">
@@ -137,10 +172,9 @@
      <input type="hidden" name="identifier" id="identifier">
      <input type="hidden" name="dateOfVisit" id="dateOfVisit">
      <table style="width:100%;">
-       <tr><td align="center"><input type="button" align="middle" style="font-size:75%;margin:0px 0px;" id="assign" name="assign" value="Assign"></td></tr>
+       <tr><td align="center"><input type="button" align="middle" style="font-size:75%;margin:0px 0px;" id="assign" name="assign" value="Assign" onclick="checkInPatient()"></td></tr>
      </table>
      </form>
      </fieldset>
-  
 </div> <!-- content div end --> 
  </body>
