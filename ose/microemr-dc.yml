@@ -1,0 +1,63 @@
+apiVersion: v1
+kind: DeploymentConfig
+metadata:
+  annotations:
+    openshift.io/generated-by: OpenShiftWebConsole
+  creationTimestamp: null
+  labels:
+    app: microemr
+    microemr: microemr
+  name: microemr
+spec:
+  replicas: 1
+  selector:
+    deploymentconfig: microemr
+  strategy:
+    resources: {}
+    rollingParams:
+      intervalSeconds: 1
+      maxSurge: 25%
+      maxUnavailable: 25%
+      timeoutSeconds: 600
+      updatePeriodSeconds: 1
+    type: Rolling
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: microemr
+        deploymentconfig: microemr
+        microemr: microemr
+    spec:
+      containers:
+      - image: 172.30.180.35:5000/microemr/microemr@sha256:cdaf91bc2b67fbaf2ff282afcc493a09280e67f2b4adc7f1a80a27b7f2d860d2
+        imagePullPolicy: Always
+        name: microemr
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+        - containerPort: 8443
+          protocol: TCP
+        resources:
+          limits:
+            cpu: 512m
+            memory: 1Gi
+          requests:
+            cpu: 512m
+            memory: 1Gi
+        terminationMessagePath: /dev/termination-log
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+  triggers:
+  - imageChangeParams:
+      automatic: true
+      containerNames:
+      - microemr
+      from:
+        kind: ImageStreamTag
+        name: microemr:latest
+    type: ImageChange
+  - type: ConfigChange
+status: {}

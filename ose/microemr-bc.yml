@@ -1,0 +1,45 @@
+apiVersion: v1
+kind: BuildConfig
+metadata:
+  annotations:
+    openshift.io/generated-by: OpenShiftWebConsole
+  creationTimestamp: null
+  labels:
+    app: microemr
+    microemr: microemr
+  name: microemr
+spec:
+  output:
+    to:
+      kind: ImageStreamTag
+      name: microemr:latest
+  resources: {}
+  source:
+    git:
+      ref: master
+      uri: https://codehub.optum.com/cloud-sdk-development/cloudsdk_micromer_ui.git
+    sourceSecret:
+      name: cloudsdk
+    type: Git
+  strategy:
+    sourceStrategy:
+      env:
+      - name: MAVEN_MIRROR_URL
+        value: http://repo1sandbox.uhc.com/artifactory/repo
+      from:
+        kind: ImageStreamTag
+        name: jboss-eap64-openshift:1.1
+        namespace: openshift
+    type: Source
+  triggers:
+  - generic:
+      secret: c46bbbc46bbd1b95
+    type: Generic
+  - github:
+      secret: 7c9d0c715b49197f
+    type: GitHub
+  - imageChange: {}
+    type: ImageChange
+  - type: ConfigChange
+status:
+  lastVersion: 0
