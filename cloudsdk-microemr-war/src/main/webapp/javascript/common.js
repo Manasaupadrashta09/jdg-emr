@@ -1,9 +1,9 @@
 
 var contextPath='http://localhost:9080/';  
-var basepath_patient=contextPath+'cloudsdk-patient-war/api/sample/patient/v1.0/';
-var basepath_provider=contextPath+'cloudsdk-physician-war/api/sample/provider/v1.0/';
-var basepath_room=contextPath+'cloudsdk-room-war/api/sample/room/v1.0/';
-var basepath_visit=contextPath+'cloudsdk-appointment-war/api/sample/patientVisit/v1.0/';
+var basepath_patient='http://patient-microemr.ose-sandbox-ctc-core.optum.com/api/sample/patient/v1.0/';
+var basepath_provider='http://physician-microemr.ose-sandbox-ctc-core.optum.com/api/sample/provider/v1.0/';
+var basepath_room='http://room-microemr.ose-sandbox-ctc-core.optum.com/api/sample/room/v1.0/';
+var basepath_visit='http://appointment-microemr.ose-sandbox-ctc-core.optum.com/api/sample/patientVisit/v1.0/';
 /**
  * Document ready function for binding events
  */
