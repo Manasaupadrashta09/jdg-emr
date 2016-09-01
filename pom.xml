@@ -20,8 +20,8 @@
 				<activeByDefault>true</activeByDefault>
 			</activation>
 			<modules>
-				<module>cloudsdk-microemr-ear</module>
 				<module>cloudsdk-microemr-war</module>
+				<module>cloudsdk-microemr-ear</module>
 			</modules>
 		</profile>
 		<profile>
