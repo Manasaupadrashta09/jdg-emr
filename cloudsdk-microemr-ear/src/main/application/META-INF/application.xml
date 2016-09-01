@@ -3,7 +3,7 @@
   <display-name>cloudsdk-microemr-ear</display-name>
   <module>
     <web>
-      <web-uri>cloudsdk-microemr-war-4.0.3-SNAPSHOT.war</web-uri>
+      <web-uri>cloudsdk-microemr-war-4.0.4-RELEASE.war</web-uri>
       <context-root>/microemr</context-root>
     </web>
   </module>

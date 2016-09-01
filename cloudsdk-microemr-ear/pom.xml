@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.optum.cloudsdk.sampleapps</groupId>
   <artifactId>cloudsdk-microemr-ear</artifactId>
-  <version>4.0.3-SNAPSHOT</version>
+  <version>4.0.4-RELEASE</version>
   <packaging>ear</packaging>
   <name>cloudsdk-microemr-ear</name>
   <build>
