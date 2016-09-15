@@ -21,19 +21,18 @@
 			</activation>
 			<modules>
 				<module>cloudsdk-microemr-war</module>
-				<module>cloudsdk-microemr-ear</module>
+				<!--  <module>cloudsdk-microemr-ear</module>-->
 			</modules>
 		</profile>
 		<profile>
 			<id>openshift</id>
 			<modules>
-				<module>cloudsdk-microemr-war</module>
 			</modules>
 		</profile>
 	</profiles>
 
 	<modules> <!-- name should match the corresponding folder name -->
-		<module>cloudsdk-microemr-ear</module>
 		<module>cloudsdk-microemr-war</module>
+		<!--  <module>cloudsdk-microemr-ear</module>-->
 	</modules>
 </project>
