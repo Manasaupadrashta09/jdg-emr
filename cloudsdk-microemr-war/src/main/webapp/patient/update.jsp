@@ -49,6 +49,10 @@
    <tr><td><label>Middle Name</label></td><td> <input type="text" name="middleName"></td></tr>
     <tr><td><label class="required">Last Name</label></td><td> <input type="text" name="lastName"></td></tr>
      <tr><td><label class="required">Date Of Birth</label></td><td><input type="text" name="dob" id="dob" readonly></td></tr>
+          <tr><td><label class="required">State</label></td><td><input type="text" name="state" id="state" ></td></tr>
+          <tr><td><label class="required">City</label></td><td><input type="text" name="city" id="city" ></td></tr>
+          <tr><td><label class="required">Zip</label></td><td><input type="text" name="zip" id="zip" ></td></tr>
+     
       <tr><td colspan="2" align="center"><input type="button" name="submit" id="submit" onclick="constraintValidate('update')" value="update"></td></tr>
  </table> 
  </fieldset>  

@@ -28,7 +28,9 @@
   <legend>Patients</legend>
      <table border="1px" id="displayTable" class="tablesorter">
        <thead>
-      <tr> <th style="width:5%;">ID</th> <th style="width:15%;" >First Name</th><th style="width:15%;">Middle Name</th><th style="width:15%;">Last Name</th><th style="width:10%;">DOB</th><th style="width:40%;">Actions</th></tr>
+      <tr> <th style="width:5%;">ID</th> <th style="width:15%;" >First Name</th><th style="width:15%;">Middle Name</th><th style="width:15%;">Last Name</th><th style="width:10%;">DOB</th>
+     <th style="width:10%;">State</th><th style="width:10%;">City</th><th style="width:10%;">Zip</th>
+      <th style="width:40%;">Actions</th></tr>
       </thead>
       <tbody>
       </tbody>

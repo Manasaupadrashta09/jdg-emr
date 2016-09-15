@@ -110,6 +110,9 @@ function storePatient(pattr,pvalue){
 		       .append('<td>'+json.middleName+'</td>')
 		       .append('<td>'+json.lastName+'</td>')
 		       .append('<td>'+json.dob+'</td>')
+		       .append('<td>'+json.state+'</td>')
+		       .append('<td>'+json.city+'</td>')
+		       .append('<td>'+json.zip+'</td>')
 		       .append('<td align="center"><a href="./update.jsp?identifier='+json.identifier+'" class="update">UPDATE</a>&nbsp; &nbsp;<a href="#" class="delete">DELETE</a></td>')
 		       .append('</tr>');
 		}	
@@ -151,6 +154,10 @@ function storePatient(pattr,pvalue){
 	        $('input[name="lastName"]').removeClass('glowing-border');
 	        $('input[name="dob"]').removeClass('glowing-border');
 	        $('input[name="identifier"]').removeClass('glowing-border');
+	        $('input[name="state"]').removeClass('glowing-border');
+	        $('input[name="city"]').removeClass('glowing-border');
+	        $('input[name="zip"]').removeClass('glowing-border');
+	        
 	       var isValid=false;
 	       if(operation==='create'){
 	    	   $('#createForm :input[type="text"]').each(function() {
