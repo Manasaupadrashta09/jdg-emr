@@ -6,6 +6,7 @@
    <head>
      <script type="text/javascript">
      $(document).ready(function(){
+
     	 $("#submit").button();
  		 $("#dob").datepicker({changeYear:true, yearRange : 'c-90:c'});
  		 $("#navCreatePatientLbl").toggleClass("ui-state-active");
@@ -24,12 +25,19 @@
              }  */
              patient={};
        	 var serviceURL=basepath_patient+'update';
+
             $('#updateForm :input[type="text"]').each(function(){
     			   storePatient($(this).attr('name'), $(this).val());  
     	   });
+    		
+    		
         	 callAjax(serviceURL, patient, 'json', false,
     		  'POST', 'application/json; charset=utf-8', 'update');
        }
+
+  
+
+	
   </script>
    
    </head>
@@ -49,9 +57,12 @@
    <tr><td><label>Middle Name</label></td><td> <input type="text" name="middleName"></td></tr>
     <tr><td><label class="required">Last Name</label></td><td> <input type="text" name="lastName"></td></tr>
      <tr><td><label class="required">Date Of Birth</label></td><td><input type="text" name="dob" id="dob" readonly></td></tr>
-          <tr><td><label class="required">State</label></td><td><input type="text" name="state" id="state" ></td></tr>
-          <tr><td><label class="required">City</label></td><td><input type="text" name="city" id="city" ></td></tr>
-          <tr><td><label class="required">Zip</label></td><td><input type="text" name="zip" id="zip" ></td></tr>
+      <tr><td><label class="required">Zip</label></td><td><input type="text" name="zip" id="zip"  min="5" maxlength="5" onKeyup="isValidChar(this.value);clearCityandState();"></td>
+       <td><input type="button" name="findZip" id="findZip" onclick="checkZip()" value="Find Zip"></td></tr>
+       
+          <tr><td><label class="required">State</label></td><td><input type="text" name="state" id="state" readonly></td></tr>
+          <tr><td><label class="required">City</label></td><td><input type="text" name="city" id="city" readonly></td></tr>
+   
      
       <tr><td colspan="2" align="center"><input type="button" name="submit" id="submit" onclick="constraintValidate('update')" value="update"></td></tr>
  </table> 

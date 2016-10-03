@@ -1,11 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+    <body>
 <!-- Common Include -->
  <jsp:include page="common_patient.jsp"/>
-<html>  
-<head>
+
 
  <script type="text/javascript">
+
+
  $(function() {
 		$("#submit").button();
 		var dateToday=new Date();
@@ -31,17 +33,23 @@
          }   */
        patient={};
 		var serviceURL = basepath_patient + 'create';
+	
 			$('#createForm :input[type="text"]').each(function() {
 				storePatient($(this).attr('name'), $(this).val());
 			});
+	
 		callAjax(serviceURL, patient, 'json', false, 'POST',
 					'application/json; charset=utf-8', 'create');
 
 		}
+
+
+
+		
 	</script>
 
-</head>
-<body>
+
+
 <!-- Common content start -->
   <div class="container">
   <jsp:include page="patient_header_nav.jsp"/>
@@ -56,9 +64,10 @@
    <tr><td><label>Middle Name</label></td><td> <input type="text" name="middleName"></td></tr>
     <tr><td><label class="required">Last Name</label></td><td> <input type="text" name="lastName"></td></tr>
      <tr><td><label class="required">Date Of Birth</label></td><td><input type="text" name="dob" id="dob" readonly></td></tr>
-      <tr><td><label class="required">State</label></td><td><input type="text" name="state" id="state" ></td></tr>
-       <tr><td><label class="required">City</label></td><td><input type="text" name="city" id="city" ></td></tr>
-        <tr><td><label class="required">Zip</label></td><td><input type="text" name="zip" id="zip" ></td></tr>
+        <tr><td><label class="required">Zip</label></td><td><input type="text" name="zip" id="zip"  min="5" maxlength="5" onKeyup="isValidChar(this.value);"></td>
+       <td><input type="button" name="findZip" id="findZip" onclick="checkZip()" value="Find Zip"></td></tr>
+       <tr><td><label class="required">State</label></td><td><input type="text" name="state" id="state" readonly></td></tr>
+       <tr><td><label class="required">City</label></td><td><input type="text" name="city" id="city" readonly></td></tr>
      <!--  <tr><td colspan="2" align="center"><input class="button-ui ui-corner-all ui-state-default ui-widget" type="button" name="submit" id="submit" onclick="createPatient()" value="Create"></td></tr> -->
       <tr><td colspan="2" align="center"><input type="button" name="submit" id="submit" onclick="constraintValidate('create')" value="Create"></td></tr>
       

@@ -4,7 +4,7 @@
 	<groupId>com.optum.cloudsdk.sampleapps</groupId>
 	<artifactId>cloudsdk-microemr-war</artifactId>
 	<packaging>war</packaging>
-	<version>4.0.4-RELEASE</version>
+	<version>4.1.0-SNAPSHOT</version>
 	<name>cloudsdk-microemr-war Maven Webapp</name>
 	<url>http://maven.apache.org</url>
 
