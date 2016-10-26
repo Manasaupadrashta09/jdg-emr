@@ -1,4 +1,4 @@
-FROM frolvlad/alpine-oraclejdk8:slim
+FROM alpine:3.4
 EXPOSE 8080 8090
 VOLUME /tmp
 ADD cloudsdk-microemr-client-4.1.0-SNAPSHOT.jar client.jar
