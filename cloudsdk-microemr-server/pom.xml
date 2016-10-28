@@ -4,7 +4,7 @@
 	<groupId>com.optum.cloudsdk.sampleapps</groupId>
 	<artifactId>cloudsdk-microemr-server</artifactId>
 	<packaging>jar</packaging>
-	<version>4.1.0-SNAPSHOT</version>
+	<version>4.1.0-RELEASE</version>
 	<name>cloudsdk-microemr-server Maven Webapp</name>
 	<url>http://maven.apache.org</url>
 
@@ -21,7 +21,7 @@
 		<java.version>1.7</java.version>
 		<version.war.plugin>2.1.1</version.war.plugin>
 		<slf4j.version>1.7.12</slf4j.version>
-		<version.hystrix>1.5.4-SNAPSHOT</version.hystrix>
+		<version.hystrix>1.5.4.1</version.hystrix>
 		<version.spring.boot>1.4.1.RELEASE</version.spring.boot>
 	</properties>
 
