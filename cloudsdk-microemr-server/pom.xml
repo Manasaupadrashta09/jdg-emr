@@ -4,40 +4,37 @@
 	<groupId>com.optum.cloudsdk.sampleapps</groupId>
 	<artifactId>cloudsdk-microemr-server</artifactId>
 	<packaging>jar</packaging>
-	<version>4.1.0-RELEASE</version>
+	<version>4.2.0-SNAPSHOT</version>
 	<name>cloudsdk-microemr-server Maven Webapp</name>
 	<url>http://maven.apache.org</url>
 
-  <parent>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-parent</artifactId>
-    <version>1.4.1.RELEASE</version>
-    <relativePath/> <!-- lookup parent from repository -->
-  </parent>
-  
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>1.4.1.RELEASE</version>
+		<relativePath /> <!-- lookup parent from repository -->
+	</parent>
+
 	<properties>
 		<maven-compiler.version>3.1</maven-compiler.version>
 		<maven-war.version>2.4</maven-war.version>
 		<java.version>1.7</java.version>
 		<version.war.plugin>2.1.1</version.war.plugin>
-		<slf4j.version>1.7.12</slf4j.version>
 		<version.hystrix>1.5.4.1</version.hystrix>
+		<version.slf4j>1.7.21</version.slf4j>
 		<version.spring.boot>1.4.1.RELEASE</version.spring.boot>
 	</properties>
 
 
 	<dependencyManagement>
 		<dependencies>
-
-
 			<dependency>
 				<groupId>com.optum.cloudsdk</groupId>
 				<artifactId>cloudsdk-slf4j-jars</artifactId>
-				<version>${slf4j.version}</version>
+				<version>${version.slf4j}</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
-
 			<dependency>
 				<groupId>com.optum.cloudsdk</groupId>
 				<artifactId>cloudsdk-hystrix-jars</artifactId>
@@ -45,15 +42,13 @@
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
-
-		<dependency>
+			<dependency>
 				<groupId>org.springframework.cloud</groupId>
 				<artifactId>spring-cloud-dependencies</artifactId>
 				<version>Brixton.SR5</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
-			
 		</dependencies>
 	</dependencyManagement>
 
@@ -63,12 +58,10 @@
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>jstl</artifactId>
-			<version>1.2</version>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
-			<version>${slf4j.version}</version>
 		</dependency>
 
 		<dependency>
@@ -88,16 +81,13 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
-			<version>${version.spring.boot}</version>
 		</dependency>
-		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
-			<version>${version.spring.boot}</version>
 			<scope>test</scope>
 		</dependency>
-	
+
 	</dependencies>
 	<build>
 		<sourceDirectory>src/main/java</sourceDirectory>
@@ -115,7 +105,6 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.1</version>
 				<configuration>
 					<source>${java.version}</source>
 					<target>${java.version}</target>
@@ -125,13 +114,12 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
-				<version>${maven-war.version}</version>
 				<configuration>
 					<warName>${project.build.finalName}</warName>
 				</configuration>
 			</plugin>
-			
-		
+
+
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>

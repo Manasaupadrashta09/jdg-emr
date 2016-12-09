@@ -5,7 +5,7 @@
 	<groupId>com.optum.cloudsdk.sampleapps</groupId>
 	<artifactId>cloudsdk_microemr_ui</artifactId>
 	<packaging>pom</packaging>
-	<version>4.1.0-RELEASE</version>
+	<version>4.2.0-SNAPSHOT</version>
 	<name>cloudsdk-microemr_ui</name>
 
 	<profiles>
@@ -20,8 +20,8 @@
 				<activeByDefault>true</activeByDefault>
 			</activation>
 			<modules>
-				<!--<module>cloudsdk-microemr-war</module>
-				  <module>cloudsdk-microemr-ear</module>-->
+				<module>cloudsdk-microemr-client</module>
+				<module>cloudsdk-microemr-server</module>
 			</modules>
 		</profile>
 		<profile>
@@ -32,7 +32,6 @@
 	</profiles>
 
 	<modules> <!-- name should match the corresponding folder name -->
-		<!-- <module>cloudsdk-microemr-war</module>
-		 <module>cloudsdk-microemr-ear</module>-->
+		<!-- <module>cloudsdk-microemr-war</module> <module>cloudsdk-microemr-ear</module> -->
 	</modules>
 </project>
